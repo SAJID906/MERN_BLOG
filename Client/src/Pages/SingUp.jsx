@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Alert, Label, TextInput } from "flowbite-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SingUp() {
   const [formData, setFormData] = useState({
@@ -11,11 +11,14 @@ function SingUp() {
   });
   // Error handling state
   const [errormessage, seterrorMessage] = useState(null);
+
+  // For successful signup nevigate to login
+  const navigate = useNavigate();
   const handler = async (e) => {
     e.preventDefault();
     // Validation check
     if (!formData.Name || !formData.Email || !formData.Password) {
-      seterrorMessage("All fields are required");
+      seterrorMessage("Please fill out all fields");
       return;
     }
     try {
@@ -23,6 +26,12 @@ function SingUp() {
         "http://localhost:5000/signup/sign",
         formData
       );
+      // if signup successful then Navigate to login
+      setTimeout(() => {
+        if (response) {
+          navigate("/signin");
+        }
+      }, 2000);
       if (response.data) {
         seterrorMessage(response.data.message);
       }
@@ -116,6 +125,12 @@ function SingUp() {
                   {errormessage}
                 </div>
               )}
+              <p>
+                Have an account?
+                <span className="text-blue-600">
+                  <Link to="/signin">login</Link>
+                </span>
+              </p>
             </form>
           </div>
         </div>

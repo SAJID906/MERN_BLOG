@@ -6,6 +6,8 @@ import Project from "./Pages/Project";
 import Signin from "./Pages/Signin";
 import SingUp from "./Pages/SingUp";
 import Header from "./Components/Header";
+import Footer from "./Components/Footer";
+
 function App() {
   return (
     <>
@@ -18,6 +20,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<SingUp />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );

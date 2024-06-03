@@ -19,6 +19,7 @@ export const SignUp = async (req, res) => {
     return res
       .status(200)
       .json({
+        success:true,
         message: "User Register Successfully",
         user: {
           id: createUser._id,
