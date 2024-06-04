@@ -2,7 +2,8 @@ import axios from "axios";
 import { Alert, Label, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { SignInFailur, SignInSuccess } from "../redux/user/userSlice";
 
 function Signin() {
   const [formData, setFormData] = useState({
@@ -10,8 +11,9 @@ function Signin() {
     Password: "",
   });
   // Error handling state
-  const [errormessage, seterrorMessage] = useState(null);
-
+  const { error: errormessage } = useSelector((state) => state.user);
+  // usedispatch to send or update to store
+  const dispatch = useDispatch();
   // For successful signup nevigate to login
   const navigate = useNavigate();
   // use Dispatch use reducer to send value to store
@@ -19,7 +21,7 @@ function Signin() {
     e.preventDefault();
     // Validation check
     if (!formData.Email || !formData.Password) {
-      seterrorMessage("Please fill out all fields");
+      dispatch(SignInFailur("Please fill out all fields"));
       return;
     }
     try {
@@ -34,14 +36,15 @@ function Signin() {
         }
       }, 2000);
       if (response.data) {
-        seterrorMessage(response.data.message);
+        console.log(response);
+        dispatch(SignInSuccess(response.data));
       }
       setFormData({
         Email: "",
         Password: "",
       });
     } catch (error) {
-      seterrorMessage(error.response.data.message);
+      dispatch(SignInFailur(error.response.data.message));
       setFormData({
         Email: "",
         Password: "",

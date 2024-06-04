@@ -6,7 +6,7 @@ const initialState = {
  
 };
 const userSlice = createSlice({
-  name: "User",
+  name: "user",
   initialState,
   reducers: {
     SignInStart: (state) => {
@@ -14,9 +14,11 @@ const userSlice = createSlice({
       state.error = null
     },
     SignInSuccess: (state, action) => {
+      console.log(state)
         state.createUser = action.payload
-        state.loading = false
+       
         state.error = null
+        localStorage.setItem("UserLogin",JSON.stringify(state.createUser.user))
       },
       SignInFailur:(state,action)=>{
         state.error=action.payload
