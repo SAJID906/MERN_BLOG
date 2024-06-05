@@ -2,6 +2,7 @@ import axios from "axios";
 import { Alert, Label, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../Components/OAuth";
 
 function SingUp() {
   const [formData, setFormData] = useState({
@@ -117,6 +118,7 @@ function SingUp() {
               >
                 Signup
               </div>
+              <OAuth />
               {errormessage && (
                 <div
                   className="bg-gradient-to-t bg-red-600 via-purple-600

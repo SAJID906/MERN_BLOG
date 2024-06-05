@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { SignInFailur, SignInSuccess } from "../redux/user/userSlice";
+import OAuth from "../Components/OAuth";
 
 function Signin() {
   const [formData, setFormData] = useState({
@@ -11,7 +12,10 @@ function Signin() {
     Password: "",
   });
   // Error handling state
-  const { error: errormessage } = useSelector((state) => state.user);
+  const {
+    user: { error: errormessage },
+  } = useSelector((state) => state.user);
+
   // usedispatch to send or update to store
   const dispatch = useDispatch();
   // For successful signup nevigate to login
@@ -106,6 +110,7 @@ function Signin() {
               >
                 SignIn
               </div>
+              <OAuth />
               {errormessage && (
                 <div
                   className="bg-gradient-to-t bg-red-600 via-purple-600
