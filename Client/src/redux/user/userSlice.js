@@ -18,7 +18,7 @@ const userSlice = createSlice({
         state.createUser = action.payload
        
         state.error = null
-        localStorage.setItem("UserLogin",JSON.stringify(state.createUser.user))
+        // localStorage.setItem("UserLogin",JSON.stringify(state.createUser.user))
       },
       SignInFailur:(state,action)=>{
         state.error=action.payload
