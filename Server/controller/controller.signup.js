@@ -50,3 +50,51 @@ export const LogIn = async (req, res) => {
       token,
     });
 };
+// OAuth Login
+export const OAuthLoing=async(req,res)=>{
+  const{Name,Email,googlePhotoUrl}=req.body;
+  
+
+ try{
+  // findOne() returns a document that only contains the projection fields
+  const user=await User.findOne({Email});
+  // if user exit already in db
+  if(user){
+    
+   const token = jwt.sign({ UserId: user._id }, process.env.jwt_secretkey);
+  //this show remove the password form document and and show all other in rest 
+   const{Password,...rest}=user._doc 
+  return res.status(200).cookie('access_token',token,{
+    httpOnly:true
+
+  }).json(rest);
+}
+// not user exit then createUser
+else{
+  // create random password becuse modle schema hava password fileds
+  // slice(-8) A negative number selects from the end of the string.
+  const generatePassword=Math.random().toString(36).slice(-8);
+  // "hash" is asynchronous and hashSync is synschronous.
+  const hashpassword=await bcrypt.hash(generatePassword,10)
+  const createUser= await new User({
+    Name,
+    Email,
+    Password:hashpassword,
+    ProfilePicture:googlePhotoUrl
+  })
+  await createUser.save();
+  
+  const token = jwt.sign({ UserId: createUser._id }, process.env.jwt_secretkey);
+//  remove password from createuser and show other document
+  const{Password,...rest}=createUser._doc;
+  res.status(200).cookie("access_token",token,{
+    httpOnly:true}
+  ).json(rest)
+}
+
+ }catch(error){
+  console.log(error);
+ }
+
+}
+

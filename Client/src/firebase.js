@@ -8,7 +8,7 @@ import { initializeApp } from "firebase/app";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     // invite we use importe.meta insteade of process.env
-  apiKey:import.meta.env.VITE_FIREBASE-KEY,
+  apiKey:"AIzaSyCNWnpC0xxG6nQO03zkKDJYzAnh_n4StTk",
   authDomain: "mern-blogs-e38e9.firebaseapp.com",
   projectId: "mern-blogs-e38e9",
   storageBucket: "mern-blogs-e38e9.appspot.com",

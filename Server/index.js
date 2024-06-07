@@ -17,6 +17,7 @@ app.use(express.json())
 app.use(cors())
 app.use('/signup',router)
 app.use('/login',router)
+app.use("/auth",router)
 // Port Connection
 
 app.listen(Port,()=>{console.log(`Server Connected at Port${Port}`)})
