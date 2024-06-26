@@ -26,7 +26,7 @@ function OAuth() {
         {
           Name: resultsFromGoogle.user.displayName,
           Email: resultsFromGoogle.user.email,
-          googlephotoUrl: resultsFromGoogle.user.photoURL,
+          ProfilePicture: resultsFromGoogle.user.photoURL,
         },
         {
           headers: {

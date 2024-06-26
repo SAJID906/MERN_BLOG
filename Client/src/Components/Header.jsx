@@ -1,11 +1,25 @@
-import { Button, Navbar, NavbarCollapse, TextInput } from "flowbite-react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownHeader,
+  Navbar,
+  NavbarCollapse,
+  TextInput,
+} from "flowbite-react";
 import React from "react";
+import { toggleTheme } from "../redux/theme/themeSlice.js";
 import { Link } from "react-router-dom";
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 
 function Header() {
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  console.log(user.createUser.data); // This will log the data related to the createUser action
+
   return (
     <>
       <Navbar className="border-b-2 ">
@@ -38,14 +52,46 @@ function Header() {
             className="w-12 h-10 rounded border-none px-2 py-1 "
             color="gray"
             pill
+            onClick={() => {
+              dispatch(toggleTheme());
+            }}
           >
             <FaMoon />
           </Button>
-          <Link to="/signin">
-            <Button className=" bg-gradient-to-tr from-purple-700 via-pink-500 to-purple-500 px-2 py-1">
-              Sign In
-            </Button>
-          </Link>
+          {/* check user Exits then show functionalit and otherwise signin button */}
+          {user.createUser ? (
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <Avatar
+                  alt="user"
+                  img={user.createUser.data.ProfilePicture}
+                  rounded
+                />
+              }
+            >
+              <DropdownHeader>
+                <span className="block text-sm  ">
+                  @{user.createUser.data.Name}
+                </span>
+                <span className="block text-sm font-medium ">
+                  {user.createUser.data.Email}
+                </span>
+              </DropdownHeader>
+              <Link to={"/dash"}>
+                <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
+
+              <Dropdown.Item>Sign Out</Dropdown.Item>
+            </Dropdown>
+          ) : (
+            <Link to="/signin">
+              <Button className=" bg-gradient-to-tr from-purple-700 via-pink-500 to-purple-500 px-2 py-1">
+                Sign In
+              </Button>
+            </Link>
+          )}
         </div>
 
         <ul className="flex gap-3 font-sans">

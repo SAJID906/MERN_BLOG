@@ -52,7 +52,7 @@ export const LogIn = async (req, res) => {
 };
 // OAuth Login
 export const OAuthLoing=async(req,res)=>{
-  const{Name,Email,googlePhotoUrl}=req.body;
+  const{Name,Email,ProfilePicture}=req.body;
   
 
  try{
@@ -80,7 +80,7 @@ else{
     Name,
     Email,
     Password:hashpassword,
-    ProfilePicture:googlePhotoUrl
+    ProfilePicture:ProfilePicture
   })
   await createUser.save();
   
