@@ -12,13 +12,14 @@ import { toggleTheme } from "../redux/theme/themeSlice.js";
 import { Link } from "react-router-dom";
 
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 
 function Header() {
   const { user } = useSelector((state) => state.user);
+  const theme = useSelector((state) => state.user.theme.theme);
   const dispatch = useDispatch();
-  console.log(user.createUser.data); // This will log the data related to the createUser action
+  //console.log(user.createUser.data); // This will log the data related to the createUser action
 
   return (
     <>
@@ -49,16 +50,17 @@ function Header() {
         {/* Right  */}
         <div className="flex gap-2  items-center md:order-2">
           <Button
-            className="w-12 h-10 rounded border-none px-2 py-1 "
+            className="w-12 h-10 rounded border border-none px-2 py-1 "
             color="gray"
             pill
             onClick={() => {
               dispatch(toggleTheme());
             }}
           >
-            <FaMoon />
+            {/* if light then sun and dark then moon icon */}
+            {theme === "light" ? <FaSun /> : <FaMoon />}
           </Button>
-          {/* check user Exits then show functionalit and otherwise signin button */}
+
           {user.createUser ? (
             <Dropdown
               arrowIcon={false}

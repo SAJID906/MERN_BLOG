@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 export const SignUp = async (req, res) => {
   try {
-    const { Name, Email, Password } = req.body;
+    const { Name, Email, Password,ProfilePicture } = req.body;
+    
     const user = await User.findOne({ Email });
     if (user) {
       return res.status(400).json({ message: "User All ready Register" });
@@ -12,6 +13,7 @@ export const SignUp = async (req, res) => {
     const createUser = await new User({
       Name,
       Email,
+      ProfilePicture,
       Password: hashpassword,
     });
     await createUser.save();
@@ -34,7 +36,7 @@ export const SignUp = async (req, res) => {
 };
 // Login Controller
 export const LogIn = async (req, res) => {
-  const { Password, Email } = req.body;
+  const { Password, Email,ProfilePicture } = req.body;
   const user = await User.findOne({ Email });
   const isMatch = user && (await bcrypt.compare(Password, user.Password));
   if (!isMatch) {
@@ -46,7 +48,8 @@ export const LogIn = async (req, res) => {
     .json({
       success: true,
       message: "login successful",
-      user: { Name: user.Name, Password: user.Password },
+      // write data insted of user becuase in auth show data.Name,profile_Pictuer
+      data: { Name: user.Name, Password: user.Password,ProfilePicture:user.ProfilePicture },
       token,
     });
 };
