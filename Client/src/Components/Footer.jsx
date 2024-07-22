@@ -8,7 +8,7 @@ function Footer() {
         <div className="w-full md:w-1/3 text-center md:text-left mb-4 md:mb-0">
           <Link to="/" className="font-bold text-3xl">
             <span className="bg-gradient-to-t bg-indigo-500 via-purple-500 from-pink-700 px-2 py-1 rounded-lg text-white">
-              Aspire
+              Mern
             </span>
             Blog
           </Link>
